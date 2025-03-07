@@ -64,6 +64,8 @@ class Stack{
         RETURN
     for i = top  TO 0:
         print stack[i]
+
+        O(n)
     */
     
     

@@ -1,0 +1,3 @@
+Hai thuộc tính quan trọng của hàm băm là :
+1.Tính toán hiệu quả: Hàm phải tính toán nhanh ( thời gian thực hiện ngắn). Giúp giảm thiểu va chạm(collision), tức là nhiều khóa cùng được ánh xạ vào một vị trí.
+2.Phân phối đồng đều: Hàm băm phải phân phối key đều trên bảng. Hàm băm phải luôn cho ra cùng một giá trị băm khi nhập vào cùng một khóa.

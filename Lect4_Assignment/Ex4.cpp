@@ -94,8 +94,5 @@ int main() {
     students.infor(1);
     students.remove(1);
     students.infor(1);
-    
-
-  
-
-}
+    return 0;
+    }

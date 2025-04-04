@@ -89,6 +89,9 @@ int main(){
         mh.insert(m);
     }
 
+    mh.insert(14);
+    mh.deleteVal(3);
+    mh.deleteVal(20);
     mh.printHeap();
 
 }

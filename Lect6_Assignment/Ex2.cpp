@@ -7,6 +7,8 @@ class maxHeap{
     private:
     vector<int> maxHeap;
 
+    //cong thuc index trong mang tra doi voi 1 node
+
     int parent(int i) {
         return (int) (i-1)/2;
     }
@@ -23,13 +25,15 @@ class maxHeap{
         while (i > 0 && maxHeap[i] > maxHeap[parent(i)]) {
             swap(maxHeap[i], maxHeap[parent(i)]);
             i = parent(i);
-        }
+        }  // ham swim len
     }
 
-    void heapifyDown(int i) {
+    void heapifyDown(int i) { // swim xuong
         int largest = i;
         int left = leftChild(i);
         int right = rightChild(i);
+
+        //kiem tra dieu kieen voi 2 con
 
         if (left < maxHeap.size() && maxHeap[left] > maxHeap[largest])
             largest = left;
@@ -62,6 +66,7 @@ class maxHeap{
             maxHeap.pop_back();
         
             if (index < maxHeap.size()) {
+                // cho sink hoac swim, dieu kien da co san trong ham
                 heapifyDown(index);
                 heapifyUp(index);
             }

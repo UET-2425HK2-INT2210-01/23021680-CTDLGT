@@ -12,7 +12,7 @@ class BST {
 
     Node* root = nullptr;
 
-    // ====== Internal Helpers ======
+ 
 
     Node* insert(Node* node, int val) {
         if (!node) return new Node(val);
@@ -79,7 +79,7 @@ class BST {
     }
 
 public:
-    // ====== Public APIs ======
+    
     void insert(int val) {
         root = insert(root, val);
     }

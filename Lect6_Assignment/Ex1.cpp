@@ -8,10 +8,22 @@ struct Node{
 
     Node(){}
 
+<<<<<<< HEAD
     Node(int _val) {
         val = _val;
         left = nullptr;
         right = nullptr;
+=======
+    Node* root = nullptr;
+
+ 
+
+    Node* insert(Node* node, int val) {
+        if (!node) return new Node(val);
+        if (val < node->val) node->left = insert(node->left, val);
+        else if (val > node->val) node->right = insert(node->right, val);
+        return node;
+>>>>>>> 94e84f3b76c41bc4abd648465b62948a7b8fbadd
     }
 
     Node(int _val, Node * _left, Node * _right) {
@@ -61,6 +73,7 @@ class BST{
         }
     }
 
+<<<<<<< HEAD
     Node * deleteNode(Node * node, int val) {
         if(!node) return nullptr;
 
@@ -98,6 +111,9 @@ class BST{
     
 
     public:
+=======
+public:
+>>>>>>> 94e84f3b76c41bc4abd648465b62948a7b8fbadd
     
     void insert(int val) {
         if(!root) {

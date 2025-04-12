@@ -1,70 +1,53 @@
 #include <iostream>
 using namespace std;
 
-class BST {
-    struct Node {
-        int val;
-        Node* left;
-        Node* right;
+struct Node{
+    int val;
+    Node * left;
+    Node * right;
 
-        Node(int v) : val(v), left(nullptr), right(nullptr) {}
-    };
+    Node(){}
 
-    Node* root = nullptr;
-
- 
-
-    Node* insert(Node* node, int val) {
-        if (!node) return new Node(val);
-        if (val < node->val) node->left = insert(node->left, val);
-        else if (val > node->val) node->right = insert(node->right, val);
-        return node;
+    Node(int _val) {
+        val = _val;
+        left = nullptr;
+        right = nullptr;
     }
 
-    Node* findMin(Node* node) {
-        while (node && node->left) node = node->left;
-        return node;
+    Node(int _val, Node * _left, Node * _right) {
+        val = _val;
+        left = _left;
+        right = _right;
+    }
+};
+
+
+
+
+class BST{
+    private:
+    
+    Node * root = nullptr;
+
+    void inOrderTraverse(Node * node) {
+        if (node == nullptr) return;
+        inOrderTraverse(node -> left);
+        cout << node -> val << " ";
+        inOrderTraverse(node ->right);
     }
 
-    Node* findMax(Node* node) {
-        while (node && node->right) node = node->right;
-        return node;
+    void preOrderTraverse(Node * node) {
+        if (node == nullptr) return;
+        cout << node -> val << " ";
+        preOrderTraverse(node -> left);
+        preOrderTraverse(node ->right);
     }
 
-    Node* deleteNode(Node* node, int val) {
-        if (!node) return nullptr;
-
-        if (val < node->val) {
-            node->left = deleteNode(node->left, val);
-        } else if (val > node->val) {
-            node->right = deleteNode(node->right, val);
-        } else {
-            // Found node to delete
-            if (!node->left && !node->right) {
-                delete node;
-                return nullptr;
-            } else if (!node->left) {
-                Node* tmp = node->right;
-                delete node;
-                return tmp;
-            } else if (!node->right) {
-                Node* tmp = node->left;
-                delete node;
-                return tmp;
-            } else {
-                Node* successor = findMin(node->right);
-                node->val = successor->val;
-                node->right = deleteNode(node->right, successor->val);
-            }
-        }
-        return node;
-    }
-
-    void inOrder(Node* node) {
-        if (!node) return;
-        inOrder(node->left);
-        cout << node->val << " ";
-        inOrder(node->right);
+    void postOrderTraverse(Node * node) {
+        if (node == nullptr) return;
+        postOrderTraverse(node -> left);
+        postOrderTraverse(node ->right);
+        cout << node -> val << " ";
     }
 
     void printTree(Node* node, string indent = "", bool isLeft = true) {
@@ -78,59 +61,155 @@ class BST {
         }
     }
 
-public:
+    Node * deleteNode(Node * node, int val) {
+        if(!node) return nullptr;
+
+        if(val > node -> val) node -> right = deleteNode(node-> right, val);
+        
+        else if(val < node -> val) node -> left = deleteNode(node-> left, val);
+        
+        else {
+            if(!node -> left) {
+                Node * temp = node -> right;
+                delete node;
+                return temp;
+            }
+
+            if(!node -> right) {
+                Node * temp = node -> left;
+                delete node;
+                return temp;
+            }
+
+            Node * succ = node -> right;
+            while(succ -> left) {
+                succ = succ -> left;
+            }
+
+            node -> val = succ -> val;
+
+            node->right = deleteNode(node->right, succ->val);
+        }
+        return node;
+
+
+
+    }
+    
+
+    public:
     
     void insert(int val) {
-        root = insert(root, val);
+        if(!root) {
+            root = new Node(val);
+            return;
+        }
+    
+        Node * temp = root;
+        while(true) {
+            if(val < temp->val) {
+                if(temp->left == nullptr) {
+                    temp->left = new Node(val);
+                    return;
+                }
+                temp = temp->left;
+            } else if(val > temp->val) {
+                if(temp->right == nullptr) {
+                    temp->right = new Node(val);
+                    return;
+                }
+                temp = temp->right;
+            } else {
+                
+                return;
+            }
+        }
+    }
+    
+
+    bool search(int val){
+        Node * temp = root;
+        while(temp != nullptr) {
+        if(val == temp->val) return true;
+        if(val < temp->val) temp = temp->left;
+        else temp = temp->right;
+    }
+    return false;
+    }
+
+    int findMax(){
+        if(!root) return -1000;
+        Node* temp = root;
+    while (temp->right != nullptr) {
+        temp = temp->right;
+    }
+    return temp->val;
+    }
+
+    int findMin(){
+        if(!root) return -1000;
+        Node* temp = root;
+        while (temp->left != nullptr) {
+        temp = temp->left;
+    }
+        return temp->val;
+    }
+
+    void inOrder() {
+        inOrderTraverse(root);
+        cout << " ";
+    }
+
+    void preOrder() {
+        preOrderTraverse(root);
+        cout << " ";
+    }
+
+    void postOrder() {
+        postOrderTraverse(root);
+        cout << " ";
     }
 
     void deleteVal(int val) {
         root = deleteNode(root, val);
     }
 
-    int findMin() {
-        Node* minNode = findMin(root);
-        if (!minNode) throw runtime_error("Empty tree");
-        return minNode->val;
-    }
-
-    int findMax() {
-        Node* maxNode = findMax(root);
-        if (!maxNode) throw runtime_error("Empty tree");
-        return maxNode->val;
-    }
-
-    void inOrderTraversal() {
-        inOrder(root);
-        cout << endl;
-    }
-
     void print() {
         printTree(root);
     }
 };
-int main() {
-    BST tree;
-    tree.insert(50);
-    tree.insert(30);
-    tree.insert(70);
-    tree.insert(20);
-    tree.insert(40);
-    tree.insert(60);
-    tree.insert(80);
 
-    cout << "In-order traversal: ";
-    tree.inOrderTraversal();
+int main(int argc,char *argv[]) {
+   BST tree;
+   tree.insert(2);
+   tree.insert(4);
+   tree.insert(10);
+   tree.insert(9);
+   tree.insert(7);
+   tree.insert(65);
+   tree.insert(34);
+   tree.insert(52);
+   tree.insert(1);
+   tree.insert(-5);
 
-    cout << "Min: " << tree.findMin() << endl;
-    cout << "Max: " << tree.findMax() << endl;
+   tree.insert(13);
+   tree.deleteVal(9);
+   tree.deleteVal(7);
+   tree.deleteVal(-1);
+   tree.print();
 
-    cout << "\nCây hiện tại:\n";
-    tree.print();
 
-    tree.deleteVal(30);
-    cout << "\nSau khi xoá 30:\n";
-    tree.print();
+//    tree.print();
+//    cout << endl;
+//    tree.preOrder();
+//    cout << endl;
+//    tree.inOrder();
+//    cout << endl;
+//    tree.postOrder();
+//    cout << endl;
+//    cout << tree.findMax(); cout << endl;
+//    cout << tree.findMin();
+//    cout << endl;
 
-    return 0;
+  
 }

@@ -29,6 +29,7 @@ class BST{
     
     Node * root = nullptr;
 
+    //Duyet inOrder
     void inOrderTraverse(Node * node) {
         if (node == nullptr) return;
         inOrderTraverse(node -> left);
@@ -36,6 +37,7 @@ class BST{
         inOrderTraverse(node ->right);
     }
 
+    //duyet preOrder
     void preOrderTraverse(Node * node) {
         if (node == nullptr) return;
         cout << node -> val << " ";
@@ -43,6 +45,8 @@ class BST{
         preOrderTraverse(node ->right);
     }
 
+
+    //duyet Postorder
     void postOrderTraverse(Node * node) {
         if (node == nullptr) return;
         postOrderTraverse(node -> left);
@@ -62,20 +66,20 @@ class BST{
     }
 
     Node * deleteNode(Node * node, int val) {
-        if(!node) return nullptr;
+        if(!node) return nullptr; // neu null
 
         if(val > node -> val) node -> right = deleteNode(node-> right, val);
         
         else if(val < node -> val) node -> left = deleteNode(node-> left, val);
         
         else {
-            if(!node -> left) {
+            if(!node -> left) { // neu left) trong
                 Node * temp = node -> right;
                 delete node;
                 return temp;
             }
 
-            if(!node -> right) {
+            if(!node -> right) { // neu right 0 trong
                 Node * temp = node -> left;
                 delete node;
                 return temp;
@@ -103,23 +107,23 @@ class BST{
         if(!root) {
             root = new Node(val);
             return;
-        }
+        } // insert null
     
         Node * temp = root;
         while(true) {
-            if(val < temp->val) {
+            if(val < temp->val) { // neu nho hon
                 if(temp->left == nullptr) {
                     temp->left = new Node(val);
                     return;
                 }
                 temp = temp->left;
-            } else if(val > temp->val) {
+            } else if(val > temp->val) { // neu lon hon 
                 if(temp->right == nullptr) {
                     temp->right = new Node(val);
                     return;
                 }
                 temp = temp->right;
-            } else {
+            } else { // neu trung 0 insert
                 
                 return;
             }

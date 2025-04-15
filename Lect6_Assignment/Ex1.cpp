@@ -130,7 +130,7 @@ class BST{
         }
     }
     
-
+    // search if exist
     bool search(int val){
         Node * temp = root;
         while(temp != nullptr) {
@@ -158,6 +158,8 @@ class BST{
     }
         return temp->val;
     }
+
+    //Ham de quy ngoai
 
     void inOrder() {
         inOrderTraverse(root);

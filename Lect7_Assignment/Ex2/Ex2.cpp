@@ -5,5 +5,5 @@ int main() {
     freopen("input.txt", "r", stdin);
     freopen("out.txt", "w", stdout);
 
-    int 
+   
 }
